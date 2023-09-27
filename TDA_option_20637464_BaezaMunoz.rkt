@@ -11,8 +11,8 @@ Descripcion: Funcion constructora que toma como argumento un code, un massage, u
 y retorna una lista que representa una opcion.
 |#
 
-(define (option Code Message ChatbotCodeLink InitialFlowCodeLink . Keyword)
-  (list Code Message ChatbotCodeLink InitialFlowCodeLink Keyword))
+(define (option Code Message chatbotcodelink initialflowcodelink . keyword)
+  (list Code Message chatbotcodelink initialflowcodelink (eliminar-ids-duplicados keyword)))
 
 
 ;--------------------------------------------------Modificiadores-----------------------------------------------
@@ -45,8 +45,35 @@ Descripcion: Funcion selectora que consigue el id de option.
 (define (get-id-option option) 
   (car option))
 
+#|
+Nombre: get-chatbotcodelink-option.
+Dominio: Option.
+Recorrido: ChatbotCodeLink (int).
+Descripcion: Funcion selectora que consigue el ChatbotCodeLink de option.
+|#
 
+(define (get-chatbotcodelink-option option) 
+  (caddr option))
 
+#|
+Nombre: get-initialflowcodelink-option.
+Dominio: Option.
+Recorrido: initialflowcodelink (int).
+Descripcion: Funcion selectora que consigue el initialflowcodelink de option.
+|#
+
+(define (get-initialflowcodelink-option option) 
+  (cadddr option))
+
+#|
+Nombre: get-keyword-option.
+Dominio: Option.
+Recorrido: keyword (string).
+Descripcion: Funcion selectora que consigue el keyword de option.
+|#
+
+(define (get-keyword-option option) 
+  (list-ref option 4))
 
 ;--------------------------------------------Provide---------------------------------------------------------------
 
