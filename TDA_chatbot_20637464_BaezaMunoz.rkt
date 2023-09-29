@@ -4,7 +4,7 @@
 (require "TDA_flow_20637464_BaezaMunoz.rkt")
 
 
-;--------------------------------------------------------Constructor-----------------
+;--------------------------------------------------------Constructor---------------------------------------------------
 #|
 Nombre: chatbot.
 Dominio: chatbotID (int) X name (String) X welcomeMessage (String) X startFlowId(int) X  flows.
@@ -17,8 +17,33 @@ Retorna una lista que representa un chatbot. El flows es procesadas para elimina
   (list chatbotID name welcomeMessage startFlowId (eliminar-ids-duplicados flows)))
 
 
+;-----------------------------Modificadores--------------------------------------------------------------------------
+#|
+Nombre: chatbot-add-flow.
+Dominio: chatbot x flow.
+Recorrido: chatbot.
+Tipo-recursion: Recursion natural.
+Descripcion: Función modificadora que agrega un flujo a la lista de flujos si es que el id del flujo es distinto
+a los ids de la lista de flujos del chatbot.
+|#
 
-;------------------------------------------- Selector-------------------------------------------------
+(define (chatbot-add-flow chatbot flow)
+  (define (flow-exists? id flows)
+    (cond
+      [(empty? flows) #f] 
+      [(equal? id (car (car flows))) #t] 
+      [else (flow-exists? id (cdr flows))])) 
+
+  (if (flow-exists? (get-id-flow flow) (get-flows-chatbot chatbot)) 
+      chatbot 
+      (list (get-id-chatbot chatbot)
+            (get-name-chatbot chatbot)
+            (get-message-chatbot chatbot)
+            (get-startFlowId-chatbot chatbot)
+            (reverse (cons flow (get-flows-chatbot chatbot)))))) ; Si el flujo no existe, lo agrega a la lista de flujos del chatbot.
+
+
+;------------------------------------------- Selector----------------------------------------------------------
 
 
 #|
@@ -74,29 +99,9 @@ descripcion: Funcion selectora que obtiene la lista de los flujos.
 (define (get-flows-chatbot chatbot)
   (last chatbot))
 
-;-----------------------------Modificadores-----------------------------------
-#|
-Nombre: chatbot-add-flow.
-Dominio: chatbot x flow.
-Recorrido: chatbot.
-Tipo-recursion: Recursion natural.
-Descripcion: Función modificadora que agrega un flujo a la lista de flujos si es que el id del flujo es distinto
-a los ids de la lista de flujos del chatbot.
-|#
-
-(define (chatbot-add-flow chatbot flow)
-  (define (flow-exists? id flows)
-    (cond
-      [(empty? flows) #f] 
-      [(equal? id (car (car flows))) #t] 
-      [else (flow-exists? id (cdr flows))])) 
-
-  (if (flow-exists? (get-id-flow flow) (get-flows-chatbot chatbot)) 
-      chatbot 
-      (list (get-id-chatbot chatbot)
-            (get-name-chatbot chatbot)
-            (get-message-chatbot chatbot)
-            (get-startFlowId-chatbot chatbot)
-            (reverse (cons flow (get-flows-chatbot chatbot)))))) ; Si el flujo no existe, lo agrega a la lista de flujos del chatbot.
 
 
+;provide----------------------------------------------------------------
+(provide chatbot)
+(provide chatbot-add-flow)
+(provide get-id-chatbot)
