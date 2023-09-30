@@ -11,8 +11,8 @@ Descripcion: Funcion constructora que toma como argumento un code, un massage, u
 y retorna una lista que representa una opcion.
 |#
 
-(define (option Code Message chatbotcodelink initialflowcodelink . keyword)
-  (list Code Message chatbotcodelink initialflowcodelink (eliminar-ids-duplicados keyword)))
+(define (option Code Message ChatbotCodeLink InitialFlowCodeLink . Keyword)
+  (list Code Message ChatbotCodeLink InitialFlowCodeLink  Keyword))
 
 
 ;--------------------------------------------------Modificiadores-----------------------------------------------
@@ -28,10 +28,11 @@ Descripcion: Función modificadora que elimina los elementos que tengan IDs dupl
 
 (define (eliminar-ids-duplicados lista)
   (if (null? lista)
-      '() 
+      '() ; Si la lista está vacía, no hay duplicados
       (if (member (caar lista) (map car (cdr lista)))
           (eliminar-ids-duplicados (cdr lista))
           (cons (car lista) (eliminar-ids-duplicados (cdr lista))))))
+
 
 
 ;----------------------------------------------------Selectores---------------------------------------------------
@@ -80,3 +81,4 @@ Descripcion: Funcion selectora que consigue el keyword de option.
 (provide option)
 (provide eliminar-ids-duplicados)
 (provide get-id-option)
+

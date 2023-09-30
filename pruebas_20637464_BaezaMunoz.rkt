@@ -10,3 +10,8 @@
 (define f10 (flow 1 "Flujo Principal Chatbot 1\nBienvenido\n¿Qué te gustaría hacer?" op1 op2 op2 op2 op2 op1)) ;solo añade una ocurrencia de op2 y op1
 (define f11 (flow-add-option f10 op1)) ;se intenta añadir opción duplicada            
 (define cb0 (chatbot 0 "Inicial" "Bienvenido\n¿Qué te gustaría hacer?" 1 f10 f10 f10 f10))  ;solo añade una ocurrencia de f10
+;Chatbot1
+(define op3 (option 1 "1) New York, USA" 1 2 "USA" "Estados Unidos" "New York"))
+(define op4 (option 2 "2) París, Francia" 1 1 "Paris" "Eiffel"))
+(define op5 (option 3 "3) Torres del Paine, Chile" 1 1 "Chile" "Torres" "Paine" "Torres Paine" "Torres del Paine"))
+(define op6 (option 4 "4) Volver" 0 1 "Regresar" "Salir" "Volver"))
