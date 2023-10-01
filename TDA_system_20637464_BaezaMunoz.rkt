@@ -14,3 +14,37 @@ Retorna una lista que representa un system. El chatbot es procesadas para elimin
 
 (define (system name InitialChatbotCodeLink . chatbot)
   (list name InitialChatbotCodeLink (eliminar-ids-duplicados chatbot) '() '() '() (current-seconds)))
+
+;----------------------------------------Selectores----------------------------------------------------
+
+#|
+Nombre: get-name-system.
+Dominio: system.
+Recorrido: name.
+descripcion: Funcion selectora que obtiene el nombre del sistema.
+|#
+
+(define (get-name-system system)
+  (car system))
+#|
+Nombre: get-codelink-system.
+Dominio: system.
+Recorrido: InitialChatbotCodeLink.
+descripcion: Funcion selectora que obtiene el InitialChatbotCodeLink del sistema.
+|#
+
+
+(define (get-codelink-system system)
+  (cadr system))
+
+#|
+Nombre: get-chatbot-system.
+Dominio: system.
+Recorrido: Lista.
+descripcion: Funcion selectora que obtiene la lista de los chatbots del sistema.
+|#
+
+(define(get-chatbot-system system)
+  (caddr system))
+
+
