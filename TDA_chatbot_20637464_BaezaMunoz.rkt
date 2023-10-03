@@ -102,6 +102,4 @@ descripcion: Funcion selectora que obtiene la lista de los flujos.
 
 
 ;provide----------------------------------------------------------------
-(provide chatbot)
-(provide chatbot-add-flow)
-(provide get-id-chatbot)
+(provide (all-defined-out))

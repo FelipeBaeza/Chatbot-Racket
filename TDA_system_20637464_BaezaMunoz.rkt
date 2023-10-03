@@ -1,6 +1,8 @@
 #lang racket
+
 (require "TDA_option_20637464_BaezaMunoz.rkt")
 (require "TDA_chatbot_20637464_BaezaMunoz.rkt")
+
 
 
 ;------------------------------------------Constructor--------------------------------------------------
@@ -47,6 +49,59 @@ descripcion: Funcion selectora que obtiene la lista de los chatbots del sistema.
 (define(get-chatbot-system system)
   (caddr system))
 
+#|
+Nombre: get-user.
+Dominio: system.
+Recorrido: Lista.
+descripcion: Funcion selectora que obtiene la lista de los usuarios del sistema.
+|#
+
+(define (get-system-user system)
+  (cadddr system))
+
+#|
+Nombre: get-login-user.
+Dominio: system.
+Recorrido: Lista.
+descripcion: Funcion selectora que obtiene la lista del usuario logueado actualmente en el sistema.
+|#
+
+(define (get-login-user system)
+  (list-ref system 4))
+
+
+#|
+Nombre: get-talk-system.
+Dominio: system.
+Recorrido: Lista.
+descripcion: Funcion selectora que obtiene la lista donde se encuentra la interaccion del usuario con el chatbot.
+|#
+
+
+(define (get-talk-system system)
+  (list-ref system 5))
+
+
+;-----------------------------------------------Modificadores-------------------------------------------
+
+#|
+Nombre: system-add-chatbot.
+Dominio: system x chatbot.
+Recorrido: system.
+Descripcion: Función modificadora que agrega un chatbot al sistema si es que el id del chatbot es distinto a los
+ids de la lista de chatbot del sistema.
+|#
+
+(define (system-add-chatbot system chatbot)
+  (if (member (get-id-chatbot chatbot) (map (lambda (sys) (car sys)) (get-chatbot-system system))) 
+      system 
+      (list (get-name-system system)
+            (get-codelink-system system)
+            (reverse (cons chatbot (reverse (get-chatbot-system system))))
+            (get-system-user system)
+            (get-login-user system)
+            (get-talk-system system)
+            (current-seconds)))) ; Agrega la opción al flujo si no existe
 
 ;-------------------------------------------------Provide------------------------------------------------
-(provide system)
+(provide (all-defined-out))

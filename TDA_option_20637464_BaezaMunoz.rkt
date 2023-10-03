@@ -78,7 +78,5 @@ Descripcion: Funcion selectora que consigue el keyword de option.
 
 ;--------------------------------------------Provide---------------------------------------------------------------
 
-(provide option)
-(provide eliminar-ids-duplicados)
-(provide get-id-option)
+(provide (all-defined-out))
 
