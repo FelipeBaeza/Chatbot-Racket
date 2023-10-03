@@ -17,6 +17,18 @@ Retorna una lista que representa un usuario y una lista vacia .
 (define (users name)
   (list  name '()))
 
+#|
+Nombre: register.
+Dominio: system x user.
+Recorrido: booleano.
+descripcion: Funcion de pertenencia que verifica si el usuario se encuentra en el sistema.
+|#
+;listo
+(define (register system user)
+  (if (member user  system) #t #f))
+
+
+
 ;----------------------------------------------Selectores-----------------------------------------------------------
 
 
