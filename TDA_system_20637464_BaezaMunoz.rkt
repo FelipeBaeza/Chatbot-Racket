@@ -50,36 +50,8 @@ descripcion: Funcion selectora que obtiene la lista de los chatbots del sistema.
 (define(get-chatbot-system system)
   (caddr system))
 
-#|
-Nombre: get-user.
-Dominio: system.
-Recorrido: Lista.
-descripcion: Funcion selectora que obtiene la lista de los usuarios del sistema.
-|#
-
-(define (get-system-user system)
-  (cadddr system))
-
-#|
-Nombre: get-login-user.
-Dominio: system.
-Recorrido: Lista.
-descripcion: Funcion selectora que obtiene la lista del usuario logueado actualmente en el sistema.
-|#
-
-(define (get-login-user system)
-  (list-ref system 4))
-
-#|
-Nombre: get-talk-system.
-Dominio: system.
-Recorrido: Lista.
-descripcion: Funcion selectora que obtiene la lista donde se encuentra la interaccion del usuario con el chatbot.
-|#
 
 
-(define (get-talk-system system)
-  (list-ref system 5))
 
 
 ;-----------------------------------------------Modificadores-------------------------------------------
