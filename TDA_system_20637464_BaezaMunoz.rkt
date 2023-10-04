@@ -2,6 +2,7 @@
 
 (require "TDA_option_20637464_BaezaMunoz.rkt")
 (require "TDA_chatbot_20637464_BaezaMunoz.rkt")
+(require "TDA_user_20637464_BaezaMunoz.rkt")
 
 
 
@@ -69,7 +70,6 @@ descripcion: Funcion selectora que obtiene la lista del usuario logueado actualm
 (define (get-login-user system)
   (list-ref system 4))
 
-
 #|
 Nombre: get-talk-system.
 Dominio: system.
@@ -102,6 +102,27 @@ ids de la lista de chatbot del sistema.
             (get-login-user system)
             (get-talk-system system)
             (current-seconds)))) ; Agrega la opción al flujo si no existe
+
+
+
+#|
+Nombre: system-add-user.
+Dominio: system x user.
+Recorrido: system.
+Descripcion: Función modificadora que agrega un usuario al sistema si es que el name del usuario es distinto a los
+names de la lista de usuarios del sistema.
+|#
+(define (system-add-user system user)
+  (if (member user (map car (get-system-user system)))
+      system
+      (list (get-name-system system)
+            (get-codelink-system system)
+            (get-chatbot-system system)
+            (reverse (cons (users user) (reverse (get-system-user system)))) ; Modificado para agregar la función user
+            (get-login-user system)
+            (get-talk-system system)
+            (current-seconds))))
+
 
 ;-------------------------------------------------Provide------------------------------------------------
 (provide (all-defined-out))
