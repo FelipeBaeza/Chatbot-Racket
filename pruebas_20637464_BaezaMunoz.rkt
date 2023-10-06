@@ -49,3 +49,5 @@
 (define s6 (system-login s5 "user8"))
 (define s7 (system-login s6 "user1"))
 (define s8 (system-login s7 "user2"))
+(define s9 (system-logout s8))
+(define s10 (system-login s9 "user2"))
