@@ -118,5 +118,22 @@ todavia no se iniciado sesion.
       system))
 
 
+#|
+Nombre: system-logout.
+Dominio: system.
+Recorrido: system.
+Descripcion: Función modificadora que permite cerrar una sesion abierta.
+|#
+;listo
+(define (system-logout system)
+  (list (get-name-system system)
+        (get-codelink-system system)
+        (get-chatbot-system system)
+        (get-system-user system)
+        '()
+        (get-talk-system system)
+        (current-seconds)))
+
+
 ;-------------------------------------------------Provide------------------------------------------------
 (provide (all-defined-out))
