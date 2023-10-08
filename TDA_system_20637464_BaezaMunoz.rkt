@@ -129,6 +129,60 @@ Descripcion: Función selectora que busca entre las opciones el id que sea igual
       (list (caddr (car option)) (cadddr (car option)))
       (new-chatbot-message (cdr option) clave)))
 
+#|
+Nombre: busqueda-especifica-norec.
+Dominio: list-elementos x clave .
+Recorrido: elemento.
+Descripcion: Función selectora que busca un elemento de una lista de elemento que sea igual a clave.
+|#
+
+
+(define (busqueda-especifica-norec list-elementos clave)
+  (car (filter (lambda (flow) (= (car flow) clave)) list-elementos)))
+
+#|
+Nombre: new-chatbot-message-norec.
+Dominio: option x clave.
+Recorrido: lista.
+Descripcion: Función selectora que busca entre las opciones el id que sea igual a clave y optiene el ChatbotCodeLink y InitialFlowCodeLink.
+|#
+
+(define (new-chatbot-message-norec option clave)
+(list (caddr (car (filter (lambda (op) (= (car op) clave)) option)))
+      (cadddr (car (filter (lambda (op) (= (car op) clave)) option)))))
+
+
+#|
+Nombre: new-buscar-chatbot-norec.
+Dominio: list-chatbot x chatbot-clave.
+Recorrido: lista.
+Descripcion: Funcion selectora que busca el chatbot que su id sea igual al de chatbot-clave.
+|#
+
+
+(define (new-buscar-chatbot-norec list-chatbot chatbot-clave)
+  (busqueda-especifica (list-ref (car (filter (lambda (cb) (= (car cb) (car chatbot-clave))) list-chatbot)) 4) (cadr chatbot-clave))      )
+
+
+#|
+Nombre: new-chatbot-message-palabra-norec.
+Dominio: Option x message.
+Recorrido: option.
+Descripcion: Funcion selectora que devuelve una opcion que sea igual a message entre la lista de opciones .
+|#
+
+
+(define (new-chatbot-message-palabra-norec options clave)
+  (define (comparador palabras)
+    (if (not (null? (filter (lambda (palabra) (equal? palabra clave)) palabras)))
+        (list (caddr (car options)) (cadddr (car options)))
+        #f))
+
+  (if (equal? clave (comparador (list-ref (car options) 4)))
+      (list (caddr (car options)) (cadddr (car options)))
+      (new-chatbot-message-palabra (cdr options) clave)))
+
+
 
 ;-----------------------------------------------Pertenencia------------------------------------------------
 
@@ -292,6 +346,74 @@ Descripcion: Función modificadora que permite interactuar el usuario con el cha
                           (get-talk-system system))
                     (get-current-seconds system))))
       system))
+
+
+
+
+#|
+Nombre: agregar-contenido-norec.
+Dominio: usuario x contenido x list-user-chathistory.
+Recorrido: lista.
+Descripcion: Función modificadora que permite agregar contenido al chathistory.
+|#
+
+(define (agregar-contenido-norec usuario contenido lista-de-usuarios)
+  (map (lambda (user)
+         (if (equal? (car user) usuario)
+             (list (car user) (append (cadr user) contenido))
+             user))
+       lista-de-usuarios))
+
+#|
+Nombre: system-talk-norec.
+Dominio: system x message.
+Recorrido: lista.
+Descripcion: Función modificadora que permite interactuar el usuario con el chatbot.
+|#
+
+
+(define (system-talk-norec system message)
+  (if (not (null? (get-login-user system)))
+      (if (null? (get-talk-system system));si todavia no se ha iniciado una coversacion
+          (list (get-name-system system)
+                (get-codelink-system system)
+                (get-chatbot-system system)
+                (agregar-contenido-norec (car (get-login-user system)) (list-ref (busqueda-especifica-norec (get-chatbot-system system) (get-codelink-system system)) 4) (get-system-user system))
+                (get-login-user system)
+                (cons (list-ref (busqueda-especifica-norec (get-chatbot-system system) (get-codelink-system system)) 4) (get-talk-system system))
+                (get-current-seconds system))
+          (if (is-number? message)
+              (if (= (length (get-talk-system system)) 1);caso donde ya se mostro chatbot y se escoge entre chatbot1 y chatbot2
+                  (list (get-name-system system)
+                        (get-codelink-system system)
+                        (get-chatbot-system system)
+                        (agregar-contenido-norec (car (get-login-user system)) (busqueda-especifica-norec (list-ref (busqueda-especifica-norec (get-chatbot-system system) (string->number message)) 4) (string->number message)) (get-system-user system))
+                        (get-login-user system)
+                        (cons (busqueda-especifica-norec (list-ref (busqueda-especifica-norec (get-chatbot-system system) (string->number message)) 4) (string->number message))  
+                              (get-talk-system system))
+                        (get-current-seconds system))
+                  (list (get-name-system system)
+                        (get-codelink-system system)
+                        (get-chatbot-system system)
+                        (agregar-contenido-norec (car (get-login-user system)) (new-buscar-chatbot-norec (get-chatbot-system system) (new-chatbot-message-norec (caddr (car (get-talk-system system))) (string->number message))) (get-system-user system))
+                        (get-login-user system)
+                        (cons (new-buscar-chatbot-norec (get-chatbot-system system) (new-chatbot-message-norec (caddr (car (get-talk-system system))) (string->number message)))
+                              (get-talk-system system))
+                        (get-current-seconds system)))
+              (list (get-name-system system)
+                    (get-codelink-system system)
+                    (get-chatbot-system system)
+                    (agregar-contenido-norec (car (get-login-user system)) (new-buscar-chatbot-norec (get-chatbot-system system) (new-chatbot-message-palabra-norec (caddr (car (get-talk-system system))) message)) (get-system-user system))
+                    (get-login-user system)
+                    (cons (new-buscar-chatbot-norec (get-chatbot-system system) (new-chatbot-message-palabra-norec (caddr (car (get-talk-system system))) message))
+                          (get-talk-system system))
+                    (get-current-seconds system))))
+      system))
+
+
+
+
+
 
 ;-------------------------------------------------Provide------------------------------------------------
 (provide (all-defined-out))
