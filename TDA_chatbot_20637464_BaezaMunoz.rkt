@@ -47,25 +47,14 @@ a los ids de la lista de flujos del chatbot.
 
 
 #|
-Nombre: get-startFlowId-chatbot.
+Nombre: get-id-chatbot.
 Dominio: chatbot.
-Recorrido: Lista.
-descripcion: Funcion selectora que obtiene la lista del IDflow del chatbot.
+Recorrido: id.
+descripcion: Funcion selectora que obtiene la lista del id del chatbot.
 |#
 
-(define (get-startFlowId-chatbot chatbot)
-  (cadddr chatbot))
-
-
-#|
-Nombre: get-message-chatbot.
-Dominio: chatbot.
-Recorrido: mensaje.
-descripcion: Funcion selectora que obtiene la lista del mensaje del chatbot.
-|#
-
-(define (get-message-chatbot chatbot)
-  (caddr chatbot))
+(define (get-id-chatbot chatbot)
+  (car chatbot))
 
 
 #|
@@ -80,14 +69,25 @@ descripcion: Funcion selectora que obtiene la lista del name del chatbot.
 
 
 #|
-Nombre: get-id-chatbot.
+Nombre: get-message-chatbot.
 Dominio: chatbot.
-Recorrido: id.
-descripcion: Funcion selectora que obtiene la lista del id del chatbot.
+Recorrido: mensaje.
+descripcion: Funcion selectora que obtiene la lista del mensaje del chatbot.
 |#
 
-(define (get-id-chatbot chatbot)
-  (car chatbot))
+(define (get-message-chatbot chatbot)
+  (caddr chatbot))
+
+
+#|
+Nombre: get-startFlowId-chatbot.
+Dominio: chatbot.
+Recorrido: Lista.
+descripcion: Funcion selectora que obtiene la lista del IDflow del chatbot.
+|#
+
+(define (get-startFlowId-chatbot chatbot)
+  (cadddr chatbot))
 
 #|
 Nombre: get-flows-chatbot.
@@ -97,7 +97,7 @@ descripcion: Funcion selectora que obtiene la lista de los flujos.
 |#
 
 (define (get-flows-chatbot chatbot)
-  (last chatbot))
+  (list-ref chatbot 4))
 
 
 

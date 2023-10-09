@@ -8,14 +8,14 @@
 #|
 Nombre: Users.
 Dominio: name (string).
-Recorrido: list.
+Recorrido: user.
 Descripcion: Función constructora que toma como argumento un name.
-Retorna una lista que representa un usuario y una lista vacia .
+Retorna una lista que representa un usuario.
 |#
 
 
 (define (users name)
-  (list  name '()))
+  name)
 
 ;------------------------------------------Pertenencia----------------------------------------------------
 
@@ -66,6 +66,9 @@ descripcion: Funcion selectora que obtiene la lista de los usuarios del sistema.
 
 (define (get-system-user system)
   (cadddr system))
+
+
+
 
 
 ;------------------------------------------------------Provide-------------------------------------------------

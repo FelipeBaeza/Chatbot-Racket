@@ -43,7 +43,8 @@ Dominio: Option.
 Recorrido: ID.
 Descripcion: Funcion selectora que consigue el id de option.
 |#
-(define (get-id-option option) 
+
+(define (get-id-option option)
   (car option))
 
 #|

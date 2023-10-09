@@ -3,6 +3,9 @@
 (require "TDA_option_20637464_BaezaMunoz.rkt")
 (require "TDA_chatbot_20637464_BaezaMunoz.rkt")
 (require "TDA_user_20637464_BaezaMunoz.rkt")
+(require "TDA_flow_20637464_BaezaMunoz.rkt")
+(require "TDA_chathistory_20637464_BaezaMunoz.rkt")
+
 
 
 
@@ -249,10 +252,10 @@ names de la lista de usuarios del sistema.
       (list (get-name-system system)
             (get-codelink-system system)
             (get-chatbot-system system)
-            (reverse (cons (users user) (reverse (get-system-user system)))) ; Modificado para agregar la función user
+            (reverse (cons (list (users user) (chatHistory '())) (reverse (get-system-user system)))) ; Modificado para agregar la función user
             (get-login-user system)
             (get-talk-system system)
-            (current-seconds))))
+            (get-current-seconds system))))
 
 
 #|
@@ -283,15 +286,15 @@ Dominio: system.
 Recorrido: system.
 Descripcion: Función modificadora que permite cerrar una sesion abierta.
 |#
-
+;li
 (define (system-logout system)
   (list (get-name-system system)
         (get-codelink-system system)
         (get-chatbot-system system)
         (get-system-user system)
         '()
-        (get-talk-system system)
-        (current-seconds)))
+        '()
+        (get-current-seconds system)))
 
 
 #|
@@ -327,9 +330,9 @@ Descripcion: Función modificadora que permite interactuar el usuario con el cha
           (list (get-name-system system)
                 (get-codelink-system system)
                 (get-chatbot-system system)
-                (agregar-contenido (car (get-login-user system)) (list-ref (busqueda-especifica (get-chatbot-system system) (get-codelink-system system)) 4)  (get-system-user system))
+                (agregar-contenido (car (get-login-user system)) (busqueda-especifica (get-chatbot-system system) (get-codelink-system system))  (get-system-user system))
                 (get-login-user system)
-                (cons (list-ref (busqueda-especifica (get-chatbot-system system) (get-codelink-system system)) 4) (get-talk-system system))
+                (cons (busqueda-especifica (get-chatbot-system system) (get-codelink-system system)) (get-talk-system system))
                 (get-current-seconds system))
           ;caso cuando entrega una palabra o un numero
           (if (is-number? message)
@@ -337,9 +340,9 @@ Descripcion: Función modificadora que permite interactuar el usuario con el cha
                   (list (get-name-system system)
                         (get-codelink-system system)
                         (get-chatbot-system system)
-                        (agregar-contenido (car (get-login-user system)) (busqueda-especifica (list-ref (busqueda-especifica (get-chatbot-system system) (string->number message)) 4) (string->number message))  (get-system-user system))
+                        (agregar-contenido (car (get-login-user system)) (new-buscar-chatbot (get-chatbot-system system) (new-chatbot-message (get-options-flow (car (get-flows-chatbot (car (get-talk-system system))))) (string->number message))) (get-system-user system))
                         (get-login-user system)
-                        (cons (busqueda-especifica (list-ref (busqueda-especifica (get-chatbot-system system) (string->number message)) 4) (string->number message))  
+                        (cons (new-buscar-chatbot (get-chatbot-system system) (new-chatbot-message (get-options-flow (car (get-flows-chatbot (car (get-talk-system system))))) (string->number message)))
                               (get-talk-system system))
                         (get-current-seconds system))
                   (list (get-name-system system)
@@ -391,18 +394,18 @@ Descripcion: Función modificadora que permite interactuar el usuario con el cha
           (list (get-name-system system)
                 (get-codelink-system system)
                 (get-chatbot-system system)
-                (agregar-contenido-norec (car (get-login-user system)) (list-ref (busqueda-especifica-norec (get-chatbot-system system) (get-codelink-system system)) 4) (get-system-user system))
+                (agregar-contenido-norec (car (get-login-user system)) (busqueda-especifica-norec (get-chatbot-system system) (get-codelink-system system)) (get-system-user system))
                 (get-login-user system)
-                (cons (list-ref (busqueda-especifica-norec (get-chatbot-system system) (get-codelink-system system)) 4) (get-talk-system system))
+                (cons (busqueda-especifica-norec (get-chatbot-system system) (get-codelink-system system)) (get-talk-system system))
                 (get-current-seconds system))
           (if (is-number? message)
               (if (= (length (get-talk-system system)) 1);caso donde ya se mostro chatbot y se escoge entre chatbot1 y chatbot2
                   (list (get-name-system system)
                         (get-codelink-system system)
                         (get-chatbot-system system)
-                        (agregar-contenido-norec (car (get-login-user system)) (busqueda-especifica-norec (list-ref (busqueda-especifica-norec (get-chatbot-system system) (string->number message)) 4) (string->number message)) (get-system-user system))
+                        (agregar-contenido-norec (car (get-login-user system)) (new-buscar-chatbot-norec (get-chatbot-system system) (new-chatbot-message-norec (get-options-flow (car (get-flows-chatbot (car (get-talk-system system))))) (string->number message))) (get-system-user system))
                         (get-login-user system)
-                        (cons (busqueda-especifica-norec (list-ref (busqueda-especifica-norec (get-chatbot-system system) (string->number message)) 4) (string->number message))  
+                        (cons (new-buscar-chatbot-norec (get-chatbot-system system) (new-chatbot-message-norec (get-options-flow (car (get-flows-chatbot (car (get-talk-system system))))) (string->number message)))  
                               (get-talk-system system))
                         (get-current-seconds system))
                   (list (get-name-system system)

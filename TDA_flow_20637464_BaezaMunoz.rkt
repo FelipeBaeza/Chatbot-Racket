@@ -35,23 +35,24 @@ descripcion: Funcion modificadora que agrega opciones si es que el id de la opci
 ;----------------------------------------------Selectores-------------------------------------------
 
 #|
-Nombre: get-name-flow.
-Dominio: flow.
-Recorrido: name.
-descripcion: Funcion selectora que obtiene la lista del nombre del flujo.
-|#
-;selecetor
-(define (get-name-flow flow)
-  (cadr flow))
-
-#|
 Nombre: get-id-flow.
 Dominio: flow.
 Recorrido: id.
 descripcion: Funcion selectora que obtiene la lista del id del flujo.
 |#
+
 (define (get-id-flow flow)
   (car flow))
+
+#|
+Nombre: get-name-flow.
+Dominio: flow.
+Recorrido: name.
+descripcion: Funcion selectora que obtiene la lista del nombre del flujo.
+|#
+
+(define (get-name-flow flow)
+  (cadr flow))
 
 #|
 Nombre: get-options-flow.
@@ -59,14 +60,12 @@ Dominio: flow.
 Recorrido: Lista.
 descripcion: Funcion selectora que obtiene la lista de optiones del flujo.
 |#
-;selector
+
 (define (get-options-flow flow)
   (caddr flow))
 
 
 ;provide-----------------------------
-(provide flow)
-(provide flow-add-option)
-(provide get-id-flow)
+(provide (all-defined-out))
 
 
