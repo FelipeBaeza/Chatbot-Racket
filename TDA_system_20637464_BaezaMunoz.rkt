@@ -183,6 +183,19 @@ Descripcion: Funcion selectora que devuelve una opcion que sea igual a message e
       (new-chatbot-message-palabra (cdr options) clave)))
 
 
+#|
+Nombre: system-synthesis.
+Dominio: system x user.
+Recorrido: string.
+Descripcion: Función selectora que buscar el historial de un usuario en especifico.
+|#
+
+
+(define (system-synthesis system user)  
+  (car (filter (lambda (x)(equal? (car x) user )) (get-system-user system))))
+
+
+
 
 ;-----------------------------------------------Pertenencia------------------------------------------------
 
@@ -409,6 +422,8 @@ Descripcion: Función modificadora que permite interactuar el usuario con el cha
                           (get-talk-system system))
                     (get-current-seconds system))))
       system))
+
+
 
 
 
