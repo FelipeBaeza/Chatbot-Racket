@@ -52,13 +52,13 @@
 (define s9 (system-logout s8))
 (define s10 (system-login s9 "user2"))
 (define s11 (system-talk-norec s10 "hola"))
-(define s12 (system-talk-rec s11 "1"))
+(define s12 (system-talk-norec s11 "viajar"))
 (define s13 (system-talk-norec s12 "1"))
 (define s14 (system-talk-rec s13 "Museo"))
 (define s15 (system-talk-norec s14 "1"))
 (define s16 (system-talk-rec s15 "3"))
 (define s17 (system-talk-norec s16 "5"))
-(display (system-synthesis s17 "user2"))
+;(display (system-synthesis s17 "user2"))
 
 
 ;Script N°2
@@ -127,4 +127,25 @@
 (define s016 (system-talk-rec s015 "1"))
 (define s017 (system-talk-norec s016 "4"))
 ;(display (system-synthesis s017 "Popin"))
+
+;Script n°3
+
+(define opp1 (option  1 "1) comer" 2 1 "completo" "pizza" "hamburguesa"))
+(define opp2 (option  2 "2) tomar" 3 1 "tequila" "shot" "piscola"))
+(define ff10 (flow 1 "flujo1" opp1 opp1 opp1 opp2)) ;solo añade una ocurrencia de op2
+(define ff11 (flow-add-option f10 opp1)) ;se intenta añadir opción duplicada
+(define cbb0 (chatbot 0 "Inicial" "Bienvenido\n¿Qué te gustaría hacer?" 1 ff10))  ;solo añade una ocurrencia de f10
+(define ss0 (system "Chatbots Inventado" 0 cbb0 cbb0))
+(define ss1 (system-add-chatbot ss0 cbb0)) ;igual a s0
+(define ss2 (system-add-user ss1 "morande"))
+(define ss3 (system-add-user ss2 "guaton salina"))
+(define ss4 (system-add-user ss3 "los atletas de la risa")) ;solo añade un ocurrencia de user2
+(define ss5 (system-add-user ss4 "dinamita show"))
+(define ss6 (system-login ss5 "meruane")) ;user8 no existe. No inicia sesión
+(define ss7 (system-login ss6 "ruperto"))
+(define ss8 (system-login ss7 "guaton salina"))  ;no permite iniciar sesión a user2, pues user1 ya inició sesión
+(define ss9 (system-logout ss8))
+(define ss10 (system-login ss9 "los atletas de la risa"))
+
+
 
